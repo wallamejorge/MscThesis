@@ -1,0 +1,737 @@
+WEBVTT
+
+1
+00:00:04.900 --> 00:00:05.988
+Hola a todos.
+
+2
+00:00:05.988 --> 00:00:12.360
+En nombre de los profesores del curso de
+detección de objetos os doy la bienvenida.
+
+3
+00:00:12.360 --> 00:00:17.294
+Esperamos que este curso introductorio
+os motive a profundizar en el tema de
+
+4
+00:00:17.294 --> 00:00:18.742
+la detección de objetos,
+
+5
+00:00:18.742 --> 00:00:22.550
+o como mínimo sirva para satisfacer
+vuestra curiosidad al respecto.
+
+6
+00:00:22.550 --> 00:00:26.254
+Además esperamos que lleguéis
+hasta el final del curso.
+
+7
+00:00:26.254 --> 00:00:29.580
+En este vídeo vamos a ver
+la idea general del curso.
+
+8
+00:00:29.580 --> 00:00:34.242
+En este curso cuando hablamos
+de detección de objetos nos
+
+9
+00:00:34.242 --> 00:00:38.940
+referimos a utilizar técnicas
+de visión por computador.
+
+10
+00:00:38.940 --> 00:00:43.647
+A priori podemos pensar en
+tener una sola imagen y
+
+11
+00:00:43.647 --> 00:00:48.918
+detectar objetos dentro de esa imagen,
+o podemos pensar en tener vídeos,
+
+12
+00:00:48.918 --> 00:00:54.840
+y por tanto una secuencia de imágenes,
+y detectar objetos en esa secuencia,
+
+13
+00:00:54.840 --> 00:00:58.673
+incluso podemos pensar en
+tener varias imágenes,
+
+14
+00:00:58.673 --> 00:01:01.797
+que vienen de un par estereoscópico,
+
+15
+00:01:01.797 --> 00:01:07.210
+y por tanto que podemos usar no
+solo la apariencia de los objetos
+
+16
+00:01:07.210 --> 00:01:12.570
+sino también la distancia a la cámara,
+su tamaño, etcétera.
+
+17
+00:01:12.570 --> 00:01:17.672
+Sin embargo en este curso nos
+vamos a centrar en el caso de
+
+18
+00:01:17.672 --> 00:01:22.622
+tener una sola imagen y tener que
+buscar los objetos en esa imagen.
+
+19
+00:01:22.622 --> 00:01:27.298
+Y por tanto vamos a utilizar
+principalmente la apariencia visual de los
+
+20
+00:01:27.298 --> 00:01:27.980
+objetos.
+
+21
+00:01:27.980 --> 00:01:32.390
+Y lo de visual lo pongo entre comillas
+simplemente porque en realidad
+
+22
+00:01:32.390 --> 00:01:37.014
+estas imágenes pueden venir
+del espectro visible,
+
+23
+00:01:37.014 --> 00:01:41.611
+que todos conocemos,
+pero también pueden venir de otras partes
+
+24
+00:01:41.611 --> 00:01:45.860
+del espectro y aún así podemos
+utilizar las mismas técnicas.
+
+25
+00:01:45.860 --> 00:01:51.642
+En esta transparencia vemos
+cuatro ejemplos de detección
+
+26
+00:01:51.642 --> 00:01:57.500
+de objetos en distintos tipos de
+imágenes y para distintas aplicaciones,
+
+27
+00:01:57.500 --> 00:02:01.677
+todas ellas en el campo de la
+asistencia a la conducción.
+
+28
+00:02:01.677 --> 00:02:05.333
+En la parte superior izquierda
+vemos un detector de
+
+29
+00:02:05.333 --> 00:02:08.495
+peatones y en la parte
+superior derecha también.
+
+30
+00:02:08.495 --> 00:02:13.030
+La diferencia es que a la izquierda el
+detector está funcionando en imágenes del
+
+31
+00:02:13.030 --> 00:02:14.190
+espectro visible,
+
+32
+00:02:14.190 --> 00:02:19.755
+y a la derecha en imágenes del
+espectro llamado infrarrojo lejano.
+
+33
+00:02:19.755 --> 00:02:24.443
+En la parte inferior, a la izquierda
+vemos un detector de vehículos,
+
+34
+00:02:24.443 --> 00:02:29.187
+y a la derecha lo que hacemos también es
+detectar vehículos pero en este caso en
+
+35
+00:02:29.187 --> 00:02:30.548
+imágenes nocturnas.
+
+36
+00:02:30.548 --> 00:02:35.664
+En el caso de la izquierda el propósito
+es hacer un sistema que se mantenga a una
+
+37
+00:02:35.664 --> 00:02:40.670
+distancia aproximadamente constante
+del vehículo que le precede,
+
+38
+00:02:40.670 --> 00:02:46.052
+y en el caso de la derecha el
+objetivo es controlar automáticamente
+
+39
+00:02:46.052 --> 00:02:51.129
+los faros de el vehículo propio
+de forma que puedan utilizar
+
+40
+00:02:51.129 --> 00:02:56.682
+luces larga automáticamente en
+todas las regiones de la escena,
+
+41
+00:02:56.682 --> 00:03:03.127
+excepto donde hay otros coches y así
+evitar deslumbrar a los otros conductores.
+
+42
+00:03:03.127 --> 00:03:08.167
+Y en el caso de las imágenes de arriba
+pues nos serviría para hacer un detector
+
+43
+00:03:08.167 --> 00:03:13.869
+de peatones y asistir al conductor
+en caso de potencial arrollamiento.
+
+44
+00:03:13.869 --> 00:03:18.592
+Todos estos aplicaciones se
+basan en técnicas como las
+
+45
+00:03:18.592 --> 00:03:21.470
+que vamos a ver en este curso.
+
+46
+00:03:21.470 --> 00:03:26.244
+Y aquí lo que vemos es un
+ejemplo de aplicación,
+
+47
+00:03:26.244 --> 00:03:29.560
+en este caso de detección de peatones.
+
+48
+00:03:29.560 --> 00:03:34.427
+Tenemos un coche equipado con unas
+cámaras, va detectando peatones y si hay
+
+49
+00:03:34.427 --> 00:03:39.358
+algún caso en que un peatón hace una
+maniobra un poco arriesgada, digamos,
+
+50
+00:03:39.358 --> 00:03:44.510
+y el coche lo detecta, pues poder
+frenar automáticamente si hace falta.
+
+51
+00:03:44.510 --> 00:03:48.170
+Así pues, siendo un poco más específico,
+
+52
+00:03:48.170 --> 00:03:52.925
+partiremos de un modelo, que you veremos
+también cómo se obtiene, y lo que queremos
+
+53
+00:03:52.925 --> 00:03:57.680
+saber es en qué lugares aparece ese
+modelo dentro de nuestra imagen.
+
+54
+00:03:57.680 --> 00:04:01.715
+Tenemos aquí el objeto que nos interesa,
+tenemos aquí un objeto de los que nos
+
+55
+00:04:01.715 --> 00:04:07.846
+interesa, aquí, aquí, eso es lo que
+tenemos que hacer y esa es nuestra
+
+56
+00:04:07.846 --> 00:04:12.320
+tarea en detección de objetos basado
+en técnicas de visión por computador.
+
+57
+00:04:12.320 --> 00:04:17.164
+En este caso concreto pues lo que
+queremos es que nuestro sistema diga que
+
+58
+00:04:17.164 --> 00:04:21.540
+aquí no hay ningún peatón,
+si es que lo que buscamos son peatones,
+
+59
+00:04:21.540 --> 00:04:26.520
+aquí tampoco,
+aquí tampoco y aquí sí que lo hay.
+
+60
+00:04:26.520 --> 00:04:31.414
+Una de las primeras cuestiones a destacar
+es que la detección de objetos basada
+
+61
+00:04:31.414 --> 00:04:35.496
+en visión por computador no es tan
+fácil como pueda parecer a priori.
+
+62
+00:04:35.496 --> 00:04:39.851
+Como seres humanos, si nos presentan una
+imagen y nos piden buscar objetos en ella
+
+63
+00:04:39.851 --> 00:04:41.820
+lo hacemos con relativa sencillez.
+
+64
+00:04:41.820 --> 00:04:46.526
+Sin embargo, para un sistema
+automático esto no es tan sencillo.
+
+65
+00:04:46.526 --> 00:04:50.493
+Solo a partir de la última década hemos
+empezado a obtener resultados que
+
+66
+00:04:50.493 --> 00:04:53.430
+son útiles para resolver
+ciertos tipos de aplicaciones.
+
+67
+00:04:53.430 --> 00:04:57.558
+Y de hecho la detección de
+objetos sigue siendo un campo
+
+68
+00:04:57.558 --> 00:05:01.160
+de investigación en la
+visión por computador.
+
+69
+00:05:01.160 --> 00:05:04.504
+Lo que queremos es modelar
+los objetos de interés de
+
+70
+00:05:04.504 --> 00:05:07.617
+forma que esos modelos
+sean discriminativos.
+
+71
+00:05:07.617 --> 00:05:11.425
+Es decir, que podemos distinguir
+una clase de objetos de otra.
+
+72
+00:05:11.425 --> 00:05:15.500
+El modelo de las personas no puede
+ser igual que el modelo de los gatos.
+
+73
+00:05:15.500 --> 00:05:19.925
+Además los modelos tienen que presentar
+
+74
+00:05:19.925 --> 00:05:24.350
+invarianza a la propia variabilidad
+que existe en las clases de objetos.
+
+75
+00:05:24.350 --> 00:05:28.332
+Por ejemplo,
+si buscamos personas en una imagen pues
+
+76
+00:05:28.332 --> 00:05:32.169
+los individuos que estén en
+ella tendrán distinta ropa,
+
+77
+00:05:32.169 --> 00:05:37.110
+estarán en distintas localizaciones,
+estarán en distintas posturas, etcétera.
+
+78
+00:05:37.110 --> 00:05:42.032
+Y además en esa imagen
+también hemos de ser
+
+79
+00:05:42.032 --> 00:05:47.885
+robustos a condiciones distintas del
+entorno, es decir, pues por ejemplo,
+
+80
+00:05:47.885 --> 00:05:52.660
+si el día estaba soleado o si el día
+era nublado, hemos de saber detectar
+
+81
+00:05:52.660 --> 00:05:57.560
+las personas o los objetos que busquemos
+independientemente de esas condiciones.
+
+82
+00:05:57.560 --> 00:06:03.830
+Por otro lado, tenemos la propia
+búsqueda de los objetos en la imagen.
+
+83
+00:06:03.830 --> 00:06:08.163
+Y esta búsqueda ha de ser tal que
+realmente nos proporcione todas las
+
+84
+00:06:08.163 --> 00:06:12.911
+posibles, digamos, ventanas que puedan
+contener los objetos que nos interesan y
+
+85
+00:06:12.911 --> 00:06:18.360
+a pesar de eso, a pesar de darnos todas
+las posibilidades, ha de ser un mecanismo
+
+86
+00:06:18.360 --> 00:06:25.015
+de búsqueda lo suficientemente eficiente
+para la aplicación que tengamos en mano.
+
+87
+00:06:25.015 --> 00:06:25.685
+Bien.
+
+88
+00:06:25.685 --> 00:06:30.456
+Todo esto nos plantea una secuencia
+de procesamiento concreta que
+
+89
+00:06:30.456 --> 00:06:34.059
+hemos resumido en este esquema
+que esquema que vemos aquí.
+
+90
+00:06:34.059 --> 00:06:35.789
+Tenemos una primera parte,
+
+91
+00:06:35.789 --> 00:06:40.400
+donde lo que se hace es extraer
+características y generar candidatos.
+
+92
+00:06:40.400 --> 00:06:44.960
+Depende del caso, y por cuestiones
+de eficiencia computacional,
+
+93
+00:06:44.960 --> 00:06:49.383
+en ocasiones primero extraeremos las
+características y después generaremos los
+
+94
+00:06:49.383 --> 00:06:53.512
+candidatos o al revés, primero
+generaremos los candidatos o extraeremos,
+
+95
+00:06:53.512 --> 00:06:55.982
+y después extraeremos las características.
+
+96
+00:06:55.982 --> 00:07:00.830
+En cualquier caso, esos candidatos you
+con sus características van a llegar
+
+97
+00:07:00.830 --> 00:07:05.095
+a un módulo de clasificación,
+que va a decidir si los candidatos
+
+98
+00:07:05.095 --> 00:07:08.585
+representan uno de los objetos
+que nos interesan o no.
+
+99
+00:07:08.585 --> 00:07:14.349
+En ocasiones, al hacer esa búsqueda de
+objetos en una imagen tendremos incluso
+
+100
+00:07:14.349 --> 00:07:19.910
+detecciones que son redundantes, y por
+tanto tenemos que refinar el resultado.
+
+101
+00:07:19.910 --> 00:07:24.485
+Una vez tenemos los resultados finales,
+vamos a utilizar, por supuesto,
+
+102
+00:07:24.485 --> 00:07:30.180
+métodos de evaluación para saber si
+nuestros modelos están funcionando
+
+103
+00:07:30.180 --> 00:07:35.210
+mejor o peor, o si son suficientemente
+buenos para la aplicación que buscamos.
+
+104
+00:07:35.210 --> 00:07:35.754
+Bien.
+
+105
+00:07:35.754 --> 00:07:39.293
+Como comentario también decir que,
+a veces,
+
+106
+00:07:39.293 --> 00:07:44.207
+en lugar de hablar de
+extracción de características,
+
+107
+00:07:44.207 --> 00:07:48.249
+diremos extracción o
+cálculo de descriptores.
+
+108
+00:07:48.249 --> 00:07:50.214
+En realidad hablamos de lo mismo.
+
+109
+00:07:50.214 --> 00:07:54.592
+Cuando hablamos de descriptor, es un poco
+desde el punto de vista de la visión
+
+110
+00:07:54.592 --> 00:07:58.168
+por computador, y cuando hablamos
+de característica es un poco más
+
+111
+00:07:58.168 --> 00:08:02.040
+desde el punto de vista del aprendizaje
+automático porque los modelos,
+
+112
+00:08:02.040 --> 00:08:06.035
+como iremos viendo a lo largo del curso,
+los vamos a aprender realmente.
+
+113
+00:08:06.035 --> 00:08:10.268
+Entonces en el contexto del aprendizaje
+automático se habla de lectores de
+
+114
+00:08:10.268 --> 00:08:14.902
+características y un poco en el contexto
+de la visión por computador muchas veces
+
+115
+00:08:14.902 --> 00:08:18.540
+hablamos de descriptores de imagen o
+descriptores de ventana, etcétera.
+
+116
+00:08:18.540 --> 00:08:23.396
+En esta tabla vemos los
+conceptos principales que iremos
+
+117
+00:08:23.396 --> 00:08:28.841
+abordando a lo largo de las distintas
+semanas del curso de detección de objetos.
+
+118
+00:08:28.841 --> 00:08:32.812
+Estos conceptos se introducirán
+progresivamente para facilitar
+
+119
+00:08:32.812 --> 00:08:34.640
+el seguimiento del curso.
+
+120
+00:08:34.640 --> 00:08:39.145
+En la primera semana you veremos las
+ideas necesarias para formular un
+
+121
+00:08:39.145 --> 00:08:43.545
+detector de objetos sencillo,
+pero que you puede funcionar en entornos
+
+122
+00:08:43.545 --> 00:08:47.450
+controlados y por tanto satisfacer
+cierto tipo de aplicaciones.
+
+123
+00:08:47.450 --> 00:08:52.964
+En la semana segunda y la
+tercera veremos nuevos
+
+124
+00:08:52.964 --> 00:08:58.548
+conceptos que nos van a permitir abordar
+problemas más complejos donde los objetos
+
+125
+00:08:58.548 --> 00:09:04.867
+a detectar son más difíciles porque
+presentan más variabilidad y también donde
+
+126
+00:09:04.867 --> 00:09:10.145
+los escenarios en los que vamos a buscar
+esos objetos también son más complejos.
+
+127
+00:09:10.145 --> 00:09:13.970
+Veremos conceptos como los
+local binary patterns,
+
+128
+00:09:13.970 --> 00:09:17.873
+los histogramas de bloques de
+esos local binary patterns,
+
+129
+00:09:17.873 --> 00:09:22.880
+veremos qué es la regresión logística y
+en general el aprendizaje automático,
+
+130
+00:09:22.880 --> 00:09:25.750
+veremos conceptos como
+la ventana deslizante,
+
+131
+00:09:25.750 --> 00:09:30.855
+las pirámides y la eliminación de ventanas
+redundantes en relación al concepto
+
+132
+00:09:30.855 --> 00:09:36.013
+de búsqueda y refinación de objetos en
+imágenes y veremos cómo evaluar los
+
+133
+00:09:36.013 --> 00:09:41.270
+clasificadores y detectores de
+objetos que vamos a diseñar.
+
+134
+00:09:41.270 --> 00:09:46.934
+En la semana cuarta y en la quinta,
+lo que haremos es centrarnos en
+
+135
+00:09:46.934 --> 00:09:53.084
+ver descriptores también más avanzados, y
+en métodos de clasificación más avanzados.
+
+136
+00:09:53.084 --> 00:09:57.383
+Así veremos conceptos como
+los conocidos HOG, es decir,
+
+137
+00:09:57.383 --> 00:10:01.370
+los histograms of oriented gradients,
+
+138
+00:10:01.370 --> 00:10:05.901
+los filtros de Haar,
+el concepto de imagen integral.
+
+139
+00:10:05.901 --> 00:10:10.919
+También veremos los SVM,
+es decir las super vector machines,
+
+140
+00:10:10.919 --> 00:10:14.780
+el concepto de AdaBoost y
+la idea de las cascadas.
+
+141
+00:10:14.780 --> 00:10:19.820
+Finalmente, decir que desde la semana
+
+142
+00:10:19.820 --> 00:10:24.920
+uno a la quinta, lo que estaremos
+viendo es lo que ha sido hasta ahora
+
+143
+00:10:24.920 --> 00:10:29.848
+el estado del arte en detección de
+objetos durante la útima década.
+
+144
+00:10:29.848 --> 00:10:33.440
+Pero evidentemente,
+como decía anteriormente,
+
+145
+00:10:33.440 --> 00:10:38.230
+esto es un campo que está en continua
+investigación y por tanto salen conceptos
+
+146
+00:10:38.230 --> 00:10:43.412
+o nuevos o revisitados que
+ahora se les ve el potencial,
+
+147
+00:10:43.412 --> 00:10:48.385
+y por tanto, lo que vamos a hacer es en
+la sexta semana dedicarnos a dar algunas
+
+148
+00:10:48.385 --> 00:10:51.820
+pinceladas sobre esos
+conceptos más avanzados.
+
+149
+00:10:51.820 --> 00:10:56.774
+Finalmente, solo reiteraros la
+bienvenida al curso en nombre de los
+
+150
+00:10:56.774 --> 00:11:00.792
+profesores y todas las personas que
+lo han hecho posible, y espero que,
+
+151
+00:11:00.792 --> 00:11:05.050
+como decía anteriormente,
+que podáis llegar al final y os guste.

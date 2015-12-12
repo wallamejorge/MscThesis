@@ -1,0 +1,204 @@
+WEBVTT
+
+1
+00:00:00.012 --> 00:00:07.221
+[MÚSICA]
+
+2
+00:00:07.221 --> 00:00:16.810
+[MÚSICA] Detectar los objetos
+que se encuentran a nuestro
+
+3
+00:00:16.810 --> 00:00:22.310
+alrededor es una de las capacidades
+principales del sistema de visión humano.
+
+4
+00:00:22.310 --> 00:00:25.490
+Es una tarea que nosotros
+hacemos de forma inconsciente
+
+5
+00:00:25.490 --> 00:00:27.670
+y continúa en nuestra actividad diaria.
+
+6
+00:00:29.430 --> 00:00:34.232
+Sin embargo para un sistema de visión
+por computador supone un gran reto.
+
+7
+00:00:34.232 --> 00:00:41.150
+[MÚSICA] [MÚSICA]
+
+8
+00:00:41.150 --> 00:00:45.785
+La visión por computador trata de resolver
+el problema de interpretar de forma
+
+9
+00:00:45.785 --> 00:00:49.335
+automática el contenido
+de imágenes y vídeos.
+
+10
+00:00:49.335 --> 00:00:53.835
+Es una tecnología emergente que podemos
+encontrar integrada en muchos de los
+
+11
+00:00:53.835 --> 00:00:59.445
+dispositivos y servicios que utilizamos
+en nuestras actividades más cotidianas.
+
+12
+00:00:59.445 --> 00:01:03.025
+Por ejemplo al tomar una foto
+con nustro teléfono móvil,
+
+13
+00:01:03.025 --> 00:01:07.400
+tablet o cámara digital,
+cuando jugamos con nuestra consola,
+
+14
+00:01:07.400 --> 00:01:12.330
+en sistemas de control de acceso y en
+muchas otras situaciones donde utilizamos
+
+15
+00:01:12.330 --> 00:01:15.830
+la información contenida
+en imágenes y vídeos.
+
+16
+00:01:19.380 --> 00:01:24.450
+Este curso se centra en una de las áreas
+específicas de la visión por computador,
+
+17
+00:01:24.450 --> 00:01:26.440
+la detección de objetos.
+
+18
+00:01:26.440 --> 00:01:30.560
+Podemos definir la detección de objetos
+como la capacidad de identificar
+
+19
+00:01:30.560 --> 00:01:35.340
+todas las instancias de un objeto
+determinado dentro de una imagen.
+
+20
+00:01:35.340 --> 00:01:40.290
+Ser capaz de detectar objetos en una
+imagen ofrece grandes oportunidades para
+
+21
+00:01:40.290 --> 00:01:44.930
+desarrollar componentes hardware y
+productos de software innovadores que
+
+22
+00:01:44.930 --> 00:01:50.020
+pueden aportar un importante valor
+añadido en múltiples escenarios,
+
+23
+00:01:50.020 --> 00:01:54.730
+aplicaciones industriales, sistemas de
+seguridad y vigilancia, sistemas de
+
+24
+00:01:54.730 --> 00:01:59.359
+conducción autónoma, aplicaciones móviles
+o nuevos dispositivos inteligentes.
+
+25
+00:02:01.150 --> 00:02:05.620
+A lo largo de las 6 semanas del
+curso iremos introduciendo desde las
+
+26
+00:02:05.620 --> 00:02:10.120
+técnicas más básicas que se podrían
+utilizar para detectar objetos
+
+27
+00:02:10.120 --> 00:02:14.480
+simples en entornos controlados
+hasta métodos más avanzados
+
+28
+00:02:14.480 --> 00:02:18.519
+que pueden detectar objetos de apariencia
+compleja en entornos abiertos.
+
+29
+00:02:19.590 --> 00:02:23.280
+Al finalizar el curso serás
+capaz de diseñar e implementar
+
+30
+00:02:23.280 --> 00:02:28.210
+un sistema completo de detección de
+objetos utilizando las librerías
+
+31
+00:02:28.210 --> 00:02:31.390
+y recursos software que os
+proporcionaremos durante el curso.
+
+32
+00:02:33.380 --> 00:02:36.660
+La detección de objetos es
+una materia muy práctica,
+
+33
+00:02:36.660 --> 00:02:40.625
+por lo tanto el contenido teórico
+del curso se complementará
+
+34
+00:02:40.625 --> 00:02:45.165
+con un ejemplo de desarrollo de un
+sistema de detección de objetos real.
+
+35
+00:02:47.415 --> 00:02:52.195
+Este curso está organizado por un equipo
+de profesores del departamento de ciencias
+
+36
+00:02:52.195 --> 00:02:56.515
+de la computación de la escuela de
+Ingeniería y del Centro de Visión por
+
+37
+00:02:56.515 --> 00:03:01.410
+Computador en la Universidad Autónoma de
+Barcelona con una amplia experiencia en la
+
+38
+00:03:01.410 --> 00:03:05.250
+docencia, investigación e innovación
+en visión por computador.
+
+39
+00:03:06.700 --> 00:03:11.120
+Esperamos que los contenidos de este
+curso respondan a vuestras expectativas.
+
+40
+00:03:11.120 --> 00:03:12.125
+Os esperamos.
+
+41
+00:03:12.125 --> 00:03:17.980
+[MÚSICA]
+
+42
+00:03:17.980 --> 00:03:25.194
+[MÚSICA]

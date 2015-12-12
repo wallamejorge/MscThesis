@@ -1,0 +1,877 @@
+WEBVTT
+
+1
+00:00:04.900 --> 00:00:05.596
+Hola.
+
+2
+00:00:05.596 --> 00:00:09.888
+En este vídeo vamos
+a empezar a trabajar en la
+
+3
+00:00:09.888 --> 00:00:13.632
+detección de objetos usando
+un esquema muy sencillo.
+
+4
+00:00:13.632 --> 00:00:15.638
+Partiremos del descriptor más simple,
+
+5
+00:00:15.638 --> 00:00:19.060
+un descriptor que solo utiliza
+características propias del pixel.
+
+6
+00:00:19.060 --> 00:00:21.816
+En este caso,
+las características de color.
+
+7
+00:00:21.816 --> 00:00:26.483
+Para poder trabajar con este descriptor
+usaremos también un clasificador muy
+
+8
+00:00:26.483 --> 00:00:27.060
+básico.
+
+9
+00:00:27.060 --> 00:00:29.530
+Y lo aplicaremos a la detección de manos.
+
+10
+00:00:29.530 --> 00:00:32.290
+Veremos sus problemas
+y algunas soluciones.
+
+11
+00:00:32.290 --> 00:00:36.991
+La selección del descriptor que
+vamos a usar para representar el
+
+12
+00:00:36.991 --> 00:00:41.039
+objeto que buscamos en cualquier sistema
+es una decisión clave para el buen
+
+13
+00:00:41.039 --> 00:00:43.150
+funcionamiento del sistema detector.
+
+14
+00:00:43.150 --> 00:00:47.400
+Dentro del esquema que vamos
+siguiendo en el curso,
+
+15
+00:00:47.400 --> 00:00:51.650
+el descriptor está ligado al módulo
+de extracción de características.
+
+16
+00:00:51.650 --> 00:00:55.508
+Y hemos dicho que empezaremos
+con un descriptor muy sencillo,
+
+17
+00:00:55.508 --> 00:00:59.483
+usaremos directamente el color del
+pixel para detectar manos en imágenes,
+
+18
+00:00:59.483 --> 00:01:02.590
+sin tener en cuenta ninguna
+característica de forma del objeto.
+
+19
+00:01:02.590 --> 00:01:08.870
+Dada una imagen de entrada, el objetivo es
+detectar estos cuatro objetos, las manos.
+
+20
+00:01:08.870 --> 00:01:13.160
+Para hacerlo usaremos
+simplemente el color de la piel.
+
+21
+00:01:13.160 --> 00:01:18.667
+Supondremos que una mano es una región
+conectada de pixeles de color de piel,
+
+22
+00:01:18.667 --> 00:01:23.462
+que es una simplificación pero que
+será útil para empezar a trabajar.
+
+23
+00:01:23.462 --> 00:01:28.201
+Con este descriptor tan simple tendremos
+que trabajar con una simplificación del
+
+24
+00:01:28.201 --> 00:01:31.093
+esquema general que hemos
+definido para este curso.
+
+25
+00:01:31.093 --> 00:01:35.302
+Nos centraremos solo en los módulos de
+extracción de características y en el
+
+26
+00:01:35.302 --> 00:01:37.625
+módulo de clasificación de candidatos.
+
+27
+00:01:37.625 --> 00:01:42.990
+En este nuevo esquema simplificado
+tendremos solamente tres fases,
+
+28
+00:01:42.990 --> 00:01:46.626
+en el módulo de extracción de
+características simplemente
+
+29
+00:01:46.626 --> 00:01:49.980
+tomaremos el valor RGB de
+cada pixel como descriptor.
+
+30
+00:01:49.980 --> 00:01:55.103
+En el módulo de clasificación
+se establecerán los límites
+
+31
+00:01:55.103 --> 00:02:00.680
+de cada característica de color para
+determinar los márgenes de la clase piel.
+
+32
+00:02:00.680 --> 00:02:06.621
+Y en el módulo de generación de ventanas
+se extraerán las regiones conectadas
+
+33
+00:02:06.621 --> 00:02:12.054
+de pixeles de clase piel y a partir de
+aquí se extraerán los objetos detectados.
+
+34
+00:02:12.054 --> 00:02:17.741
+En este vídeo nos centraremos en
+los dos primeros módulos, en este y
+
+35
+00:02:17.741 --> 00:02:23.590
+en este y dejaremos la generación de
+ventanas para el siguiente vídeo.
+
+36
+00:02:23.590 --> 00:02:27.020
+Veamos con más detalle estos dos pasos.
+
+37
+00:02:27.020 --> 00:02:29.256
+Dada la imagen de entrada,
+
+38
+00:02:29.256 --> 00:02:33.740
+podemos observar el espacio
+del descriptor de color.
+
+39
+00:02:33.740 --> 00:02:37.711
+Dentro de este espacio en que hemos
+indicado cada pixel con su color,
+
+40
+00:02:37.711 --> 00:02:40.460
+podemos identificar los
+diferentes objetos.
+
+41
+00:02:40.460 --> 00:02:44.924
+Esta nube de puntos corresponde
+a los pixeles de la roca,
+
+42
+00:02:44.924 --> 00:02:50.560
+esta segunda corresponde a los pixeles de
+las manos, es decir los de la piel y esta
+
+43
+00:02:50.560 --> 00:02:56.360
+última más gris corresponde a los pixeles
+que forman parte del fondo de la imagen.
+
+44
+00:02:56.360 --> 00:03:02.070
+A partir de aquí podemos adaptar el paso
+de la clasificación para esta imagen,
+
+45
+00:03:02.070 --> 00:03:07.158
+las fronteras de la clase piel
+vendrán dadas por los parámetros S1,
+
+46
+00:03:07.158 --> 00:03:11.320
+S2 y S3 y podremos también
+identificar su centro.
+
+47
+00:03:11.320 --> 00:03:16.229
+Los resultados de aplicar los
+pasos del esquema visto sobre una
+
+48
+00:03:16.229 --> 00:03:20.441
+imagen serán los siguientes,
+la clasificación de la piel usando el
+
+49
+00:03:20.441 --> 00:03:24.530
+clasificador que hemos definido
+antes se puede ver en esta imagen.
+
+50
+00:03:24.530 --> 00:03:28.400
+Se ha calculado un centro y un
+tamaño para cada uno de los lados.
+
+51
+00:03:28.400 --> 00:03:32.936
+En blanco aparecen los pixeles dentro
+de la clase piel y en negro los
+
+52
+00:03:32.936 --> 00:03:36.180
+pixeles que han quedado
+fuera de la clase piel.
+
+53
+00:03:36.180 --> 00:03:40.710
+Finalmente quedará el paso de generar
+ventanas pero como you hemos dicho,
+
+54
+00:03:40.710 --> 00:03:42.840
+lo veremos en un vídeo siguiente.
+
+55
+00:03:42.840 --> 00:03:45.904
+En definitiva, tenemos un
+resultado bastante bueno para esta
+
+56
+00:03:45.904 --> 00:03:49.500
+imagen considerando que hemos utilizado
+un procedimiento muy similar.
+
+57
+00:03:49.500 --> 00:03:53.550
+Vamos a ver ahora qué pasa si se
+producen cambios de intensidad,
+
+58
+00:03:53.550 --> 00:03:57.000
+esto es si la imagen es
+adquirida con una luz más tenue.
+
+59
+00:03:57.000 --> 00:04:01.870
+Las imágenes de entrada al sistema
+podrían ser las siguientes.
+
+60
+00:04:01.870 --> 00:04:06.228
+Su representación en el espacio de
+color por supuesto será diferente para
+
+61
+00:04:06.228 --> 00:04:07.080
+cada imagen.
+
+62
+00:04:07.080 --> 00:04:11.475
+Ahora los colores aparecen mucho más
+agrupados en la imagen de menor intensidad
+
+63
+00:04:11.475 --> 00:04:18.095
+y por tanto la posición de los pixeles de
+color de piel variará para cada imagen.
+
+64
+00:04:18.095 --> 00:04:23.099
+Si tomamos el clasificador que nos ha
+funcionado para la primera imagen y
+
+65
+00:04:23.099 --> 00:04:28.520
+sin cambiar sus parámetros y lo
+usamos para el resto de las imágenes,
+
+66
+00:04:28.520 --> 00:04:33.295
+veremos que el clasificador
+está desplazado con respecto
+
+67
+00:04:33.295 --> 00:04:38.132
+a lo que es el centro de la clase piel y
+por tanto puntos de piel quedarán fuera y
+
+68
+00:04:38.132 --> 00:04:41.487
+dentro captará puntos que no son
+exactamente de piel y que pueden
+
+69
+00:04:41.487 --> 00:04:44.110
+corresponder perfectamente
+al fondo o a la ropa.
+
+70
+00:04:44.110 --> 00:04:49.075
+Así pues, los resultados de
+esta clasificación sobre las
+
+71
+00:04:49.075 --> 00:04:53.951
+imágenes serán estos,
+donde podemos ver que el clasificador
+
+72
+00:04:53.951 --> 00:04:58.784
+que funciona para la imagen
+inicial deja de funcionar para las
+
+73
+00:04:58.784 --> 00:05:03.209
+imágenes que se han capturado
+con una luz más tenue,
+
+74
+00:05:03.209 --> 00:05:08.099
+es decir imágenes que han
+sufrido un cambio de intensidad,
+
+75
+00:05:08.099 --> 00:05:12.990
+done nos aparecen regiones del fondo
+que no están correctamente segmentadas.
+
+76
+00:05:12.990 --> 00:05:16.470
+Para introducir invariancia
+a la intensidad,
+
+77
+00:05:16.470 --> 00:05:20.650
+a estos cambios de intensidad
+en un descriptor de color,
+
+78
+00:05:20.650 --> 00:05:25.667
+una solución posible es pasar al
+espacio de coordenadas cromáticas.
+
+79
+00:05:25.667 --> 00:05:30.635
+Las coordenadas cromáticas de un color
+de RGB se calculan dividiendo por
+
+80
+00:05:30.635 --> 00:05:35.075
+la intensidad de cada punto,
+es decir se divide el valor del pixel en
+
+81
+00:05:35.075 --> 00:05:38.740
+cada canal por la suma R más
+G más B de los tres canales.
+
+82
+00:05:38.740 --> 00:05:42.980
+Si tenemos en cuenta que los cambios
+de intensidad en una imagen se pueden
+
+83
+00:05:42.980 --> 00:05:50.960
+representar como producto de un
+escalar que indicamos con la letra s,
+
+84
+00:05:50.960 --> 00:05:58.155
+y que es aplicado a todos los puntos
+de la imagen y a todos sus canales,
+
+85
+00:05:58.155 --> 00:06:03.529
+tendremos que, si suponemos un punto
+en una imagen que ha sido modificada
+
+86
+00:06:03.529 --> 00:06:08.920
+por un cambio de intensidad, le aplicamos
+un paso a coordenadas cromáticas,
+
+87
+00:06:08.920 --> 00:06:13.822
+veremos que el escalar puede ser
+agrupado y por tanto puede ser cancelado
+
+88
+00:06:13.822 --> 00:06:16.400
+entre el numerador y el denominador.
+
+89
+00:06:16.400 --> 00:06:23.340
+Así pues, obtenemos un descriptor que es
+completamente invariante a la intensidad.
+
+90
+00:06:23.340 --> 00:06:26.230
+Un punto importante de este descriptor es
+
+91
+00:06:26.230 --> 00:06:30.280
+que ha perdido una dimensión y
+pasa a ser de dimensión dos.
+
+92
+00:06:30.280 --> 00:06:33.722
+Puesto que el paso a coordenadas
+cromáticas se puede entender como una
+
+93
+00:06:33.722 --> 00:06:39.121
+proyección sobre el plano R más
+G más B igual a uno y en este, y
+
+94
+00:06:39.121 --> 00:06:44.770
+tendríamos toda la información de color en
+este plano, por tanto en dos dimensiones.
+
+95
+00:06:44.770 --> 00:06:49.539
+Los resultados de aplicar estos
+pasos sobre las imágenes anteriores
+
+96
+00:06:49.539 --> 00:06:51.190
+serán los siguientes.
+
+97
+00:06:51.190 --> 00:06:56.105
+El paso a coordenadas cromáticas nos lleva
+a tres imágenes prácticamente idénticas,
+
+98
+00:06:56.105 --> 00:07:00.461
+puesto que se ha cancelado el parámetro
+introducido por la diferencia de
+
+99
+00:07:00.461 --> 00:07:01.436
+intensidad.
+
+100
+00:07:01.436 --> 00:07:06.314
+Sobre este resultado aplicamos
+clasificador inicial o una adaptación
+
+101
+00:07:06.314 --> 00:07:10.668
+de este, obtenemos una
+clasificación de piel prácticamente
+
+102
+00:07:10.668 --> 00:07:12.940
+perfecta en las tres imágenes.
+
+103
+00:07:12.940 --> 00:07:17.456
+Vamos a ver ahora qué pasa si
+se presentan cambios en el color
+
+104
+00:07:17.456 --> 00:07:22.091
+global de la imagen que pueden ser debidos
+bien a un cambio de luz en la escena o
+
+105
+00:07:22.091 --> 00:07:25.360
+a un cambio en el tipo de cámara
+usado para la adquisición.
+
+106
+00:07:25.360 --> 00:07:29.788
+Las imágenes de entrada al sistema
+podrían ser las siguientes.
+
+107
+00:07:29.788 --> 00:07:34.677
+Su representación en el espacio de color
+será por supuesto diferente para cada
+
+108
+00:07:34.677 --> 00:07:39.265
+una de estas imágenes, La posición de los
+pixeles de color de piel variará para cada
+
+109
+00:07:39.265 --> 00:07:45.073
+imagen, incluso es difícil segmentarla
+en esta vista del espacio.
+
+110
+00:07:45.073 --> 00:07:49.733
+Si tomamos la posición del clasificador
+que nos ha funcionado para la
+
+111
+00:07:49.733 --> 00:07:53.685
+primera imagen, y sin cambiar los
+parámetros lo intentamos usar para el
+
+112
+00:07:53.685 --> 00:07:58.442
+resto de las imágenes, veremos que estos
+clasificadores están captando en su
+
+113
+00:07:58.442 --> 00:08:02.912
+interior puntos que no son de color
+piel y otros que forman parte del fondo,
+
+114
+00:08:02.912 --> 00:08:06.840
+no hay una alineación perfecta entre
+el clasificador y la clase piel.
+
+115
+00:08:06.840 --> 00:08:07.573
+Así pues,
+
+116
+00:08:07.573 --> 00:08:12.790
+los resultados de este clasificador
+sobre todas las imágenes serán estos.
+
+117
+00:08:12.790 --> 00:08:17.480
+donde podemos ver que el clasificador
+que funciona para la imagen inicial,
+
+118
+00:08:17.480 --> 00:08:22.329
+esta, deja de funcionar para el
+resto de las imágenes que son
+
+119
+00:08:22.329 --> 00:08:25.480
+las que han sufrido un cambio de color.
+
+120
+00:08:25.480 --> 00:08:30.255
+Y además,
+para estas imágenes será muy difícil
+
+121
+00:08:30.255 --> 00:08:33.530
+adoptar un nuevo clasificador para
+que funciona bien para todas ellas.
+
+122
+00:08:33.530 --> 00:08:37.696
+Estos problemas son muy comunes para
+imágenes que han sido adquiridas en
+
+123
+00:08:37.696 --> 00:08:39.480
+condiciones no controladas.
+
+124
+00:08:39.480 --> 00:08:45.634
+Para evitar pues estos efectos
+de desviaciones globales
+
+125
+00:08:45.634 --> 00:08:50.395
+de color debido tanto a la nominación
+como a la cámara, una posible solución
+
+126
+00:08:50.395 --> 00:08:55.350
+es aplicar un procesamiento previo a todas
+las imágenes que permiten eliminar o como
+
+127
+00:08:55.350 --> 00:08:59.969
+mínimo reducir esto efectos y convertir
+la imagen en una imagen canónica,
+
+128
+00:08:59.969 --> 00:09:06.750
+esto es una imagen que simula haber
+sido adquirida bajo una luz controlada.
+
+129
+00:09:06.750 --> 00:09:11.043
+Este paso no siempre es posible
+pero hay algunos algoritmos que
+
+130
+00:09:11.043 --> 00:09:12.830
+intentar solucionarlo.
+
+131
+00:09:12.830 --> 00:09:15.285
+Aquí veremos el algoritmo de white-patch,
+
+132
+00:09:15.285 --> 00:09:18.910
+uno de los más sencillos pero que
+puede funcionar en muchos casos.
+
+133
+00:09:18.910 --> 00:09:23.988
+El algoritmo de white-patch intenta
+eliminar el efecto global del color en una
+
+134
+00:09:23.988 --> 00:09:28.896
+imagen asumiendo que los valores
+máximos de RGB que aparecen
+
+135
+00:09:28.896 --> 00:09:33.793
+en esa imagen corresponden al
+color de una superficie blanca y
+
+136
+00:09:33.793 --> 00:09:38.160
+por tanto al color de la luz de esa escena
+que se proyecta en esa superficie blanca.
+
+137
+00:09:38.160 --> 00:09:45.320
+Así pues, para estimar el color de la luz
+se calcula el valor máximo de cada canal.
+
+138
+00:09:45.320 --> 00:09:51.399
+Una vez si estimado la luz de la
+escena con este máximo de cada canal,
+
+139
+00:09:51.399 --> 00:09:56.873
+el algoritmo intenta eliminar su efecto
+introduciendo una luz blanca canónica.
+
+140
+00:09:56.873 --> 00:10:03.970
+Supondremos pues, que el color de
+la luz blanca es el 255, 255, 255.
+
+141
+00:10:03.970 --> 00:10:10.012
+Para eliminar la luz de color
+se divide por la luz estimada
+
+142
+00:10:10.012 --> 00:10:14.880
+en el paso anterior y se multiplica
+por la luz blanca que acabamos de ver.
+
+143
+00:10:14.880 --> 00:10:17.770
+Esto es, se multiplica cada canal
+
+144
+00:10:17.770 --> 00:10:22.265
+por el cociente entre 255
+y el máximo de ese canal.
+
+145
+00:10:22.265 --> 00:10:29.650
+Así pues, dadas las imágenes de partida
+y podemos analizar los resultados.
+
+146
+00:10:29.650 --> 00:10:34.189
+La aplicación del algoritmo de white-patch
+nos lleva a cuatro imágenes muy similares,
+
+147
+00:10:34.189 --> 00:10:37.650
+en la que el patrón de blanco perfecto
+está presente en todas ellas.
+
+148
+00:10:37.650 --> 00:10:42.517
+La similitud entre todas estas imágenes
+nos introduce una mayor estabilidad del
+
+149
+00:10:42.517 --> 00:10:46.890
+color y por tanto permitirá
+obtener una mejor clasificación.
+
+150
+00:10:46.890 --> 00:10:52.600
+Si apocamos el clasificador inicial,
+el que habíamos calculado con esta imagen
+
+151
+00:10:52.600 --> 00:10:58.680
+obtenemos una clasificación mejor que sin
+el white-patch pero todavía no es buena.
+
+152
+00:10:58.680 --> 00:11:04.315
+Aquí, aquí y aquí nos van apareciendo
+regiones mal clasificadas.
+
+153
+00:11:04.315 --> 00:11:09.100
+Sin embargo, gracias a la estabilidad de
+las imágenes obtenidas es fácil encontrar
+
+154
+00:11:09.100 --> 00:11:14.695
+unas nuevas condiciones que se adapten
+a todas las imágenes del patrón blanco.
+
+155
+00:11:14.695 --> 00:11:17.901
+Y por tanto podemos obtener una
+clasificación que es buena para todas
+
+156
+00:11:17.901 --> 00:11:20.290
+ellas, como es el caso de
+esta que acabamos de ver.
+
+157
+00:11:20.290 --> 00:11:25.173
+you para acabar y como resumen
+de esta clase podemos decir que
+
+158
+00:11:25.173 --> 00:11:29.906
+en este vídeo hemos empezado a trabajar
+con la detección de objetos con un esquema
+
+159
+00:11:29.906 --> 00:11:32.220
+simplificado para ir entrando en el tema.
+
+160
+00:11:32.220 --> 00:11:36.875
+Hemos usado un descriptor de
+objetos que simplemente ha usado
+
+161
+00:11:36.875 --> 00:11:41.530
+características de pixel, las
+características mínimas, las del color,
+
+162
+00:11:41.530 --> 00:11:44.728
+sin considerar para nada
+la forma de los objetos.
+
+163
+00:11:44.728 --> 00:11:48.470
+Y hemos visto también un
+ejemplo simple de clasificador.
+
+164
+00:11:48.470 --> 00:11:53.475
+A partir de este esquema hemos analizado
+el problema del cambio de intensidad
+
+165
+00:11:53.475 --> 00:11:58.459
+y hemos propuesto una solución cambiando
+al descriptor a una versión que fuera
+
+166
+00:11:58.459 --> 00:12:02.490
+invariante a la intensidad,
+son las coordenadas cromáticas.
+
+167
+00:12:02.490 --> 00:12:07.350
+Después hemos visto también el problema
+del cambio global del color de la escena,
+
+168
+00:12:07.350 --> 00:12:12.183
+que puede ser también debido bien a luz
+o bien a la cámara y se ha propuesto una
+
+169
+00:12:12.183 --> 00:12:15.350
+solución basada en el
+algoritmo white-patch.
+
+170
+00:12:15.350 --> 00:12:18.614
+Por supuesto podemos encontrar
+muchos más problemas,
+
+171
+00:12:18.614 --> 00:12:23.163
+podemos tener imágenes que no contengan
+ninguna superficie más o menos blanca y
+
+172
+00:12:23.163 --> 00:12:27.956
+por tanto sea imposible normalizarlas con
+el white-patch, que por tanto requieran
+
+173
+00:12:27.956 --> 00:12:31.460
+otro tipo de algoritmos para la
+estimación del color global.
+
+174
+00:12:31.460 --> 00:12:36.391
+De todas maneras, la principal debilidad
+de la propuesta de hoy es que hemos
+
+175
+00:12:36.391 --> 00:12:41.545
+partido de la suposición de que una
+mano es una región de color de piel
+
+176
+00:12:41.545 --> 00:12:47.760
+y evidentemente es una simplificación
+que no funcionará en imágenes generales
+
+177
+00:12:47.760 --> 00:12:52.900
+en las que pueden aparecer otros objetos
+de color piel que no sean manos.
+
+178
+00:12:52.900 --> 00:12:56.833
+Y hasta aquí este vídeo en el que hemos
+trabajado con un sistema muy básico de
+
+179
+00:12:56.833 --> 00:12:57.520
+detección.
+
+180
+00:12:57.520 --> 00:12:58.275
+Esto es todo.
