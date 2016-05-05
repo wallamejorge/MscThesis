@@ -1,0 +1,18 @@
+Copyright (C) 2013-2015 Embedded Micro
+
+Version B1.0
+
+This is the first public release of the Mojo IDE since adding Lucid support. Lucid is a new hardware description language that is designed to be easier to use than Verilog or VHDL. More info on Lucid can be found at https://embeddedmicro.com/tutorials/lucid
+
+
+Change log: 
+    First public release!
+    Auto-updating
+    Added Tools->Flash Firmware... to update the firmware on your Mojo
+    Fixed some bugs
+    Improved Verilog highlighter performance
+
+Major known bugs: 
+    Rare crash when pasting with all the text selected on Linux
+
+    Submit new bugs to bugspray@embeddedmicro.com

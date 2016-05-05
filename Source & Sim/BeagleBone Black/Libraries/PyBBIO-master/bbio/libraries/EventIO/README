@@ -1,0 +1,15 @@
+EventIO - v0.2
+
+Copyright 2012 Alexander Hiam <alex@graycat.io>
+
+EventIO provides basic multi-process event-driven programming
+for PyBBIO (https://github.com/alexanderhiam/PyBBIO). 
+
+Documentation:
+  https://github.com/alexanderhiam/PyBBIO/wiki/EventIO
+
+Example program:
+  PyBBIO/examples/EventIO_test.py
+
+EventIO is released as part of PyBBIO under its MIT license.
+See PyBBIO/LICENSE.txt

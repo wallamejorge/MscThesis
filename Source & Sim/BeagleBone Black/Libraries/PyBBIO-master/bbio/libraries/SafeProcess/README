@@ -1,0 +1,21 @@
+SafeProcess - v0.1
+
+Copyright 2012 Alexander Hiam <alex@graycat.io>
+
+For PyBBIO - https://github.com/alexanderhiam/PyBBIO
+
+Provides a wrapper for Python's mutliprocessing.Process class
+which will be terminated during PyBBIO's cleanup.
+
+Documentation:
+  https://github.com/alexanderhiam/PyBBIO/wiki/SafeProcess
+
+Example program:
+  PyBBIO/examples/SafeProcess_test.py
+
+See the Python docs for multiprocessing.Process:
+  http://docs.python.org/library/multiprocessing.html#multiprocessing.Process
+
+SafeProcess is released as part of PyBBIO under its MIT License
+license. See PyBBIO/LICENSE.txt
+
